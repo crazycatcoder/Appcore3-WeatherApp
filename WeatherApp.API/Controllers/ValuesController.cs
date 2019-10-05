@@ -26,7 +26,7 @@ namespace WeatherApp.API.Controllers
         {
             return new string[] { "value1" };
         } */
-
+        [AllowAnonymous]
         // GET api/values
         [HttpGet]
         public async Task<IActionResult> GetValues()
