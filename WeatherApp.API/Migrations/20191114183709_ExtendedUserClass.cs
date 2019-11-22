@@ -12,6 +12,11 @@ namespace WeatherApp.API.Migrations
                 table: "Users",
                 nullable: true);
 
+            migrationBuilder.AddColumn<string>(
+                name: "Country",
+                table: "Users",
+                nullable: true);
+
             migrationBuilder.AddColumn<DateTime>(
                 name: "Created",
                 table: "Users",
@@ -51,17 +56,12 @@ namespace WeatherApp.API.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<string>(
-                name: "country",
-                table: "Users",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
                 name: "lookingFor",
                 table: "Users",
                 nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "Photo",
+                name: "Photos",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -70,13 +70,14 @@ namespace WeatherApp.API.Migrations
                     Description = table.Column<string>(nullable: true),
                     DateAdded = table.Column<DateTime>(nullable: false),
                     IsMain = table.Column<bool>(nullable: false),
+                    PublicId = table.Column<string>(nullable: true),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Photo", x => x.Id);
+                    table.PrimaryKey("PK_Photos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Photo_Users_UserId",
+                        name: "FK_Photos_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -84,18 +85,22 @@ namespace WeatherApp.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Photo_UserId",
-                table: "Photo",
+                name: "IX_Photos_UserId",
+                table: "Photos",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Photo");
+                name: "Photos");
 
             migrationBuilder.DropColumn(
                 name: "City",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "Country",
                 table: "Users");
 
             migrationBuilder.DropColumn(
@@ -124,10 +129,6 @@ namespace WeatherApp.API.Migrations
 
             migrationBuilder.DropColumn(
                 name: "LastActive",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "country",
                 table: "Users");
 
             migrationBuilder.DropColumn(

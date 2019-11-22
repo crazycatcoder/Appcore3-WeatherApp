@@ -27,6 +27,8 @@ namespace WeatherApp.API.Migrations
 
                     b.Property<bool>("IsMain");
 
+                    b.Property<string>("PublicId");
+
                     b.Property<string>("Url");
 
                     b.Property<int>("UserId");
@@ -35,7 +37,7 @@ namespace WeatherApp.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Photo");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("WeatherApp.API.Models.User", b =>
@@ -44,6 +46,8 @@ namespace WeatherApp.API.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("City");
+
+                    b.Property<string>("Country");
 
                     b.Property<DateTime>("Created");
 
@@ -64,8 +68,6 @@ namespace WeatherApp.API.Migrations
                     b.Property<byte[]>("PasswordSalt");
 
                     b.Property<string>("Username");
-
-                    b.Property<string>("country");
 
                     b.Property<string>("lookingFor");
 
