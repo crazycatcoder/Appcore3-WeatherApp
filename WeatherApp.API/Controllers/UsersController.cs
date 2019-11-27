@@ -47,7 +47,7 @@ namespace WeatherApp.API.Controllers
             return Ok(usersToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUser")]
         public async Task<ActionResult> GetUser( int id) 
         {
             var user = await _repo.GetUser(id);
