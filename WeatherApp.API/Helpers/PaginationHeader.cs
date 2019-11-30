@@ -8,7 +8,7 @@ namespace WeatherApp.API.Helpers
         public int TotalPages { get; set; }
         public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
-            this.TotalPages = currentPage;
+            this.CurrentPage = currentPage;
             this.ItemsPerPage = itemsPerPage;
             this.TotalItems = totalItems;
             this.TotalPages = totalPages;

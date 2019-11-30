@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace WeatherApp.API.Helpers
 {
@@ -16,10 +17,11 @@ namespace WeatherApp.API.Helpers
             int currentPage, int itemsPerPage, int totalItems, int totalPages)
             {
                 var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
-                response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader));
-                response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
-
-            }
+                var camelCaseHFormatter = new JsonSerializerSettings();
+                camelCaseHFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationHeader, camelCaseHFormatter));
+                response.Headers.Add("Access-Control-Expose-Headers", "Pagination");            
+            }  
 
         public static int CalculateAge(this DateTime theDateTime)
         {
