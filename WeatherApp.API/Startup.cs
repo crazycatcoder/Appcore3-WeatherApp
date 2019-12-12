@@ -32,10 +32,28 @@ namespace WeatherApp.API
 
         public IConfiguration Configuration { get; }
 
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(x => {
+                x.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                x.UseLazyLoadingProxies();
+            });
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(x => {
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                x.UseLazyLoadingProxies();
+            });
+
+            ConfigureServices(services);
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddJsonOptions(opts => {
                 opts.SerializerSettings.ReferenceLoopHandling = 
@@ -88,7 +106,16 @@ namespace WeatherApp.API
            // app.UseHttpsRedirection();
            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
            app.UseAuthentication();
-            app.UseMvc();
+           app.UseDefaultFiles();
+           app.UseStaticFiles();
+            app.UseMvc(routes => 
+            {
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new {controller = "Fallback",
+                    action = "Index"}
+                );
+            });
         }
     }
 }

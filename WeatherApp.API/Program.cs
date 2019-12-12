@@ -28,8 +28,10 @@ namespace WeatherApp.API
                 }
                 catch (Exception ex) 
                 {
-                    var logger = services.GetRequiredService<Logger<Program>>();
-                    logger.LogError( ex, "An error occured during Migration");
+                    // var logger = services.GetRequiredService<Logger<Program>>();
+                   // var logger = services.GetRequiredService<LogUserActivity<Program>>();
+
+//logger.LogError( ex, "An error occured during Migration");
 
                 }
             }
